@@ -23,9 +23,11 @@ public class ContactController {
     public ContactController(ContactService contactService){
         this.contactService = contactService;
     }
+
     @GetMapping(value = "/")
     public ResponseEntity<Contact> getRandomContact() {
         Contact contact = contactService.getContact();
         return ResponseEntity.ok(contact);
     }
+
 }
