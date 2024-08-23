@@ -3,8 +3,11 @@ package com.demo.contacts.repository;
 import com.demo.contacts.model.Contact;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Repository
 public class InMemoryContactRepository implements ContactRepository{
@@ -17,14 +20,15 @@ public class InMemoryContactRepository implements ContactRepository{
     }
 
     @Override
-    public Contact readContactByID(UUID id) {
-        return contactList.stream()
-                .map(E -> E.getId(),E);
+    public Optional<Contact> readContactByID(UUID id) {
+        return Optional.of(contactList.stream()
+                .filter(obj -> obj.getId() == id)
+                .findFirst().get());
     }
 
     @Override
-    public List readAllContact() {
-        return List.of();
+    public List<Contact> readAllContact() {
+        return new ArrayList<>(contactList);
     }
 
     @Override
